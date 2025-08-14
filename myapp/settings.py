@@ -5,21 +5,28 @@ Django settings for myapp project.
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# -----------------------
+# Paths
+# -----------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# -----------------------
+# Security
+# -----------------------
 SECRET_KEY = os.getenv(
     'SECRET_KEY',
     'django-insecure-vu@0qc(d-7a9)z^%v&7aet%mkq%avp$nj055kuut_l4kb7gqba'
 )
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if not DEBUG else ['*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'myapp-1-wl38.onrender.com').split(',')
 
-# Application definition
+# -----------------------
+# Installed apps
+# -----------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,6 +39,9 @@ INSTALLED_APPS = [
     'authentication',
 ]
 
+# -----------------------
+# Middleware
+# -----------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -44,6 +54,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'myapp.urls'
 
+# -----------------------
+# Templates
+# -----------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -63,15 +76,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myapp.wsgi.application'
 
 # -----------------------
-# Database configuration
+# Database
 # -----------------------
-if DEBUG:  # Local development with XAMPP
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'django_db',        # Your local DB name
-            'USER': 'root',             # Your local MySQL username
-            'PASSWORD': '',             # Your local MySQL password
+            'NAME': 'django_db',  # Local DB name
+            'USER': 'root',       # Local DB user
+            'PASSWORD': '',       # Local DB password
             'HOST': '127.0.0.1',
             'PORT': '3306',
         }
@@ -82,12 +95,11 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.getenv('DB_NAME'),
             'USER': os.getenv('DB_USER'),
-           
+            'PASSWORD': os.getenv('DB_PASSWORD'),
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT', '3306'),
         }
     }
-
 
 # -----------------------
 # Password validation
@@ -120,6 +132,7 @@ USE_TZ = True
 # -----------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # -----------------------
 # Default primary key field type
@@ -130,7 +143,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
-
-
-
 
