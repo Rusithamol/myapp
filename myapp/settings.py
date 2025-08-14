@@ -90,12 +90,9 @@ if DEBUG:
         }
     }
 else:
-    # Production: PostgreSQL (Render) from DATABASE_URL
-   DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL")
-    )
-}
+  DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 # -----------------------
 # Password validation
@@ -131,4 +128,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
 
