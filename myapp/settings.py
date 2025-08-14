@@ -78,20 +78,21 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # Database
 # -----------------------
 if DEBUG:
-    # Development: Local MySQL
+    # Local Development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'django_db',
-            'USER': 'root',
-            'PASSWORD': '',  # Your local password
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
+            'NAME': os.getenv('DB_NAME', 'django_db'),
+            'USER': os.getenv('DB_USER', 'root'),
+            'PASSWORD': os.getenv('DB_PASSWORD', ''),
+            'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+            'PORT': os.getenv('DB_PORT', '3306'),
         }
     }
 else:
-  DATABASES = {
-        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    # Production: Use DATABASE_URL environment variable
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"), conn_max_age=600)
     }
 
 # -----------------------
@@ -128,5 +129,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
-
 
