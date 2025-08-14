@@ -78,15 +78,26 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'django_db',
+#         'USER':'root',
+#         'HOST': '127.0.0.1',
+#         'PORT':'3306'
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_db',
-        'USER':'root',
-        'HOST': '127.0.0.1',
-        'PORT':'3306'
+        'NAME': os.getenv('django_db'),
+        'USER': os.getenv('root'),
+       
+        'HOST': os.getenv('127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
+
 
 
 # Password validation
@@ -139,6 +150,7 @@ STATICFILES_DIRS : [os.path.join(BASE_DIR,'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL='authentication.User'
+
 
 
 
