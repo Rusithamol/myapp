@@ -1,24 +1,23 @@
-dj-database-url==1.1.0
-gunicorn==22.3.1
-mysqlclient==2.2.7
+# Core dependencies
 Django==4.2.20
+gunicorn==20.1.0        # valid Gunicorn version
+dj-database-url==1.1.0
+mysqlclient==2.2.7
 PyMySQL==1.1.1
+django-bootstrap-v5==1.0.11
+python-decouple==3.8
 
+# Optional / utility dependencies
 asgiref==3.8.1
 beautifulsoup4==4.13.3
 certifi==2025.7.14
 charset-normalizer==3.4.2
 distlib==0.3.9
-Django==4.2.20
-django-bootstrap-v5==1.0.11
 filelock==3.18.0
 idna==3.10
 instaloader==4.14.2
 mysql-connector-python==9.3.0
-mysqlclient==2.2.7
 platformdirs==4.3.6
-PyMySQL==1.1.1
-python-decouple==3.8
 requests==2.32.4
 soupsieve==2.6
 sqlparse==0.5.3
@@ -26,5 +25,3 @@ typing_extensions==4.12.2
 tzdata==2025.1
 urllib3==2.5.0
 virtualenv==20.29.3
-dj-database-url==1.1.0
-
