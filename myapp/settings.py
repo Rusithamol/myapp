@@ -1,5 +1,5 @@
 """
-Django settings for myapp project.
+Django settings for myapp project (Render-ready version).
 """
 
 import os
@@ -74,11 +74,8 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # Database (PostgreSQL)
 # -----------------------
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv(
-            'DATABASE_URL',
-            'postgresql://django_db_ggnj_user:HhIElWSzcTv6fHjlwQZjTd5BjyRG2FC0@dpg-d2ep8andiees73847q10-a.oregon-postgres.render.com/django_db_ggnj'
-        ),
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
@@ -106,8 +103,10 @@ USE_TZ = True
 # Static files
 # -----------------------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']       # Local static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'        # Collected static files for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')   # Collected static files
+STATICFILES_DIRS = [BASE_DIR / 'static']             # Local static folder
+
+# Whitenoise storage for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # -----------------------
@@ -120,3 +119,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
 
+# -----------------------
+# Additional Render settings
+# -----------------------
+# Make sure DEBUG=False on production
+# Run migrations and collectstatic on deployment:
+# python manage.py migrate
+# python manage.py collectstatic --noinput
