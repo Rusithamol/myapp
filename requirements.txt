@@ -1,11 +1,7 @@
 asgiref==3.8.1
-Django==5.1.7
+Django==4.2.14
 django-bootstrap-v5==1.0.11
 mysqlclient==2.2.4
 sqlparse==0.5.1
-Django==5.1.7
-mysqlclient
-
 google-generativeai
 pyautogui
-
