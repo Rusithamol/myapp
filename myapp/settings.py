@@ -76,17 +76,18 @@ if DEBUG:  # Local development with XAMPP
             'PORT': '3306',
         }
     }
-else:  # Production on Render
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('django_db'),
-            'USER': os.getenv('root'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
            
-            'HOST': os.getenv('127.0.0.1'),
-            'PORT': os.getenv('3306'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT', '3306'),
         }
     }
+
 
 # -----------------------
 # Password validation
@@ -129,6 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
 
 
 
