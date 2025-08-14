@@ -4,16 +4,10 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# -----------------------
-# Security
-# -----------------------
-SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'myapp-2-z7fd.onrender.com').split(',')
 
-# -----------------------
-# Installed apps
-# -----------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,9 +20,6 @@ INSTALLED_APPS = [
     'authentication',
 ]
 
-# -----------------------
-# Middleware
-# -----------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -41,9 +32,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'myapp.urls'
 
-# -----------------------
-# Templates
-# -----------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -62,9 +50,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myapp.wsgi.application'
 
-# -----------------------
-# Database
-# -----------------------
+# ---------- DATABASE ----------
 DATABASES = {
     'default': dj_database_url.parse(
         os.getenv(
@@ -76,9 +62,7 @@ DATABASES = {
     )
 }
 
-# -----------------------
-# Password validation
-# -----------------------
+# ---------- PASSWORD VALIDATION ----------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -86,31 +70,17 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# -----------------------
-# Internationalization
-# -----------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# -----------------------
-# Static files (CSS, JS, images)
-# -----------------------
+# ---------- STATIC FILES ----------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # local static folder
-STATIC_ROOT = BASE_DIR / 'staticfiles'    # production static folder
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Optional: enable WhiteNoise to serve static files in production
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# -----------------------
-# Default primary key field type
-# -----------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# -----------------------
-# Custom user model
-# -----------------------
+# ---------- CUSTOM USER ----------
 AUTH_USER_MODEL = 'authentication.User'
