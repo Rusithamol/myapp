@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # -----------------------
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),  # Use Render DATABASE_URL
+        default=os.getenv('DATABASE_URL'),  # Ensure DATABASE_URL is set on Render
         conn_max_age=600,
         ssl_require=True
     )
@@ -105,8 +105,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Collected static files
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Local static folder
-
-# Whitenoise storage for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # -----------------------
@@ -120,14 +118,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authentication.User'
 
 # -----------------------
-# Tips for deployment on Render
+# Deployment notes for Render
 # -----------------------
-# 1. Make sure you have a 'static' folder in your project root.
-# 2. Set environment variables on Render:
-#    - SECRET_KEY
-#    - DEBUG=False
-#    - ALLOWED_HOSTS=myapp-2-z7fd.onrender.com
-#    - DATABASE_URL=<Render Postgres URL>
-# 3. Add post-deploy commands on Render dashboard:
+# 1. Make sure the 'static' folder exists in your project root.
+# 2. On Render, set these environment variables:
+#    SECRET_KEY
+#    DEBUG=False
+#    ALLOWED_HOSTS=myapp-2-z7fd.onrender.com
+#    DATABASE_URL=<Render Postgres URL>
+# 3. In Render dashboard, add post-deploy commands:
 #    python manage.py migrate
 #    python manage.py collectstatic --noinput
+# 4. If 500 errors persist, temporarily set DEBUG=True to see the full error.
