@@ -87,6 +87,9 @@ if DEBUG:
             'PASSWORD': '',       # Local DB password
             'HOST': '127.0.0.1',
             'PORT': '3306',
+            'OPTIONS': {
+            'ssl': {'ca': '/path/to/ssl/cert.pem'}  # If your DB requires SSL
+        },
         }
     }
 else:
@@ -98,6 +101,9 @@ else:
             'PASSWORD': os.getenv('DB_PASSWORD'),
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT', '3306'),
+            'OPTIONS': {
+            'ssl': {'ca': '/path/to/ssl/cert.pem'}  # If your DB requires SSL
+        },
         }
     }
 
@@ -143,4 +149,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
 
