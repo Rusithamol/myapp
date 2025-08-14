@@ -1,27 +1,15 @@
-"""
-Django settings for myapp project.
-"""
-
 import os
 from pathlib import Path
 import dj_database_url
 
-# -----------------------
-# Paths
-# -----------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # -----------------------
 # Security
 # -----------------------
-SECRET_KEY = os.getenv(
-    'SECRET_KEY',
-    'django-insecure-vu@0qc(d-7a9)z^%v&7aet%mkq%avp$nj055kuut_l4kb7gqba'
-)
-
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = ['*'] if DEBUG else os.getenv('ALLOWED_HOSTS', 'myapp-1-wl38.onrender.com').split(',')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
+DEBUG = False  # Production mode
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'myapp-1-wl38.onrender.com').split(',')
 
 # -----------------------
 # Installed apps
@@ -43,6 +31,7 @@ INSTALLED_APPS = [
 # -----------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for serving static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +48,7 @@ ROOT_URLCONF = 'myapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,25 +64,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myapp.wsgi.application'
 
 # -----------------------
-# Database
+# Database (PostgreSQL)
 # -----------------------
-if DEBUG:
-    # Development: Local MySQL
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'django_db',
-            'USER': 'root',
-            'PASSWORD': '',  # Your local password
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-        }
-    }
-else:
-    # Production: PostgreSQL (Render) from DATABASE_URL
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-    }
+DATABASES = {
+    'default': dj_database_url.parse(
+        os.getenv(
+            'DATABASE_URL',
+            'postgresql://django_db_ggnj_user:HhIElWSzcTv6fHjlwQZjTd5BjyRG2FC0@dpg-d2ep8andiees73847q10-a.oregon-postgres.render.com/django_db_ggnj'
+        ),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # -----------------------
 # Password validation
@@ -117,8 +99,9 @@ USE_TZ = True
 # Static files
 # -----------------------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / 'static']       # Local static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'        # Collected static files for production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # -----------------------
 # Default primary key field type
@@ -126,6 +109,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # -----------------------
-# Custom User Model
+# Custom user model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
