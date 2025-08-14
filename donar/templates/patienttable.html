@@ -1,0 +1,89 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}  
+    {% bootstrap_css %}   
+    {% bootstrap_javascript %}
+   <style>
+    tr,th,td{
+        border: 1px solid black;
+    }
+    li{
+    padding-right: 200px;
+}
+
+   </style> 
+</head>
+
+
+
+{% block extra_head %}
+
+
+
+{% endblock %}
+
+{% block content %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <img src="{% static 'assets/images/best-hospital.jpg' %}" width="100px" class="rounded-circle float-start" alt="...">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/home/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/donar/donartable/">Donar views</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/donar/patienttable/">Patient Views</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </ul>
+        
+      </div>
+    </div>
+  </nav>
+<center><h1>Patient Table</h1></center>
+<center><table border="2px solid black">
+    <thead>
+    <tr>
+        <th>Patient Name</th>
+        <th>Patient Age</th>
+        <th>Gender</th>
+        <th>Blood Group</th>
+        <th>Organ</th>
+        <th>Address</th>
+        <th>District</th>
+        <th>Email</th>
+        <th>Mobile</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for patient in all_patients %}
+        <tr>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.gender }}</td>
+            <td>{{ patient.blood_group }}</td>
+            <td>{{ patient.organ }}</td>
+            <td>{{ patient.address }}</td>
+            <td>{{ patient.district }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.mobile_number }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table></center>
+{% endblock %}

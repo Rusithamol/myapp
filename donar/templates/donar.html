@@ -1,0 +1,102 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}  
+    {% bootstrap_css %}   
+    {% bootstrap_javascript %}
+   <style>
+    body{
+        background-image: url("{% static 'assets/images/p1.jpg' %}");
+        background-size: cover;
+    }
+   form {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(236, 234, 239, 0.644);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+   
+    font-size: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+li{
+    padding-right: 200px;
+}
+a:hover{
+    color: aqua;
+
+}
+
+   </style> 
+</head>
+
+
+
+{% block extra_head %}
+
+
+
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <img src="{% static 'assets/images/best-hospital.jpg' %}" width="100px" class="rounded-circle float-start" alt="...">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/home/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/donar/PatientRegistrationpage/">Patient Registration</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/donar/DonarRegistrationpage/">Donor Registration</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<center><h1 class="text-primary">Donor Registration</h1></center>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+  <center>  <button type="submit">Register</button></center>
+
+    {% if messages %}
+    <div id="message-box">
+        {% for message in messages %}
+            <p style="color: green;">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{% url 'donor' %}";  
+        }, 2000); 
+    </script>
+    {% endif %}
+</form>
+{% endblock %}

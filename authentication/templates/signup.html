@@ -1,0 +1,83 @@
+{% load static %}
+
+
+<html>
+ <head>
+{% load bootstrap5 %}
+{% bootstrap_css %}  
+{% bootstrap_javascript %} 
+
+    <style>
+        body {
+            font-size: 20px;
+            background-color: #f8f9fa;
+            background-image: url("{% static 'assets/images/sigin1.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            margin: 0; /* Remove default margin */
+            height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+
+        #demo {
+            width: 400px;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.934);
+            text-align: center;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        } 
+    </style>
+</head>
+<br><br><br>
+<body>
+    <div class="container">
+        <div id="demo">
+            <h2>Register</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="username" class="form-label">User Name:</label>
+                    <input type="text" name="username" class="form-control" id="username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" name="password" class="form-control" id="password" required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Father Name:</label>
+                    <input type="text" name="first_name" class="form-control" id="first_name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Mother Name:</label>
+                    <input type="text" name="last_name" class="form-control" id="last_name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address:</label>
+                    <input type="email" name="email" class="form-control" id="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age:</label>
+                    <input type="number" name="age" class="form-control" id="age" min="1" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+                <div class="text-danger mt-2">{{ error }}</div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
