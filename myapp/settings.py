@@ -77,8 +77,8 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', 'aws.connect.psdb.cloud'),
         'PORT': os.getenv('DB_PORT', '3306'),
         'OPTIONS': {
-            'ssl': {'ca': os.getenv('MYSQL_SSL_CA', None)}  # optional if Render provides SSL certificate
-        }
+            'ssl': {'ca': os.getenv('MYSQL_SSL_CA', None)},  # Render may provide a CA certificate
+        },
     }
 }
 
@@ -104,8 +104,8 @@ USE_TZ = True
 # Static files
 # -----------------------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # local static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'    # collected static files for production
 
 # -----------------------
 # Default primary key field type
@@ -116,3 +116,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
