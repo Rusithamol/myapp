@@ -4,10 +4,7 @@ Django settings for myapp project.
 
 import os
 from pathlib import Path
-import pymysql
-
-# Install PyMySQL as MySQLdb
-pymysql.install_as_MySQLdb()
+import dj_database_url
 
 # -----------------------
 # Paths
@@ -81,30 +78,21 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # Database
 # -----------------------
 if DEBUG:
+    # Development: Local MySQL
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'django_db',  # Local DB
+            'NAME': 'django_db',
             'USER': 'root',
-            'PASSWORD': '',       # Local password
+            'PASSWORD': '',  # Your local password
             'HOST': '127.0.0.1',
             'PORT': '3306',
         }
     }
 else:
+    # Production: PostgreSQL (Render) from DATABASE_URL
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT', '3306'),
-            'OPTIONS': {
-                # Uncomment and set path if your DB requires SSL
-                # 'ssl': {'ca': os.path.join(BASE_DIR, 'ssl', 'cert.pem')}
-            },
-        }
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
 
 # -----------------------
@@ -141,4 +129,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
-
