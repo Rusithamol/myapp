@@ -80,11 +80,11 @@ else:  # Production on Render
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT', '3306'),
+            'NAME': os.getenv('django_db'),
+            'USER': os.getenv('root'),
+           
+            'HOST': os.getenv('127.0.0.1'),
+            'PORT': os.getenv('3306'),
         }
     }
 
@@ -129,4 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
 
