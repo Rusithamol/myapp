@@ -5,6 +5,7 @@ mysqlclient==2.2.4
 sqlparse==0.5.1
 Django==5.1.7
 mysqlclient
-django-bootstrap-v5
+
 google-generativeai
 pyautogui
+
