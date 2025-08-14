@@ -1,3 +1,7 @@
+"""
+Django settings for myapp project.
+"""
+
 import os
 from pathlib import Path
 import dj_database_url
@@ -10,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # -----------------------
 # Security
 # -----------------------
-SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')  # Never hardcode in production
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'myapp-2-z7fd.onrender.com').split(',')
 
@@ -102,8 +106,8 @@ USE_TZ = True
 # Static files
 # -----------------------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']   # Local static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'    # Collected static files for production
+STATICFILES_DIRS = [BASE_DIR / 'static']       # Local static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'        # Collected static files for production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # -----------------------
@@ -115,3 +119,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
