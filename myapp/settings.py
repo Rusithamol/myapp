@@ -1,18 +1,22 @@
 import os
 from pathlib import Path
-import pymysql
+import dj_database_url
 
-# Use PyMySQL as MySQLdb
-pymysql.install_as_MySQLdb()
-
+# -----------------------
+# Paths
+# -----------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # -----------------------
 # Security
 # -----------------------
-SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    'django-insecure-vu@0qc(d-7a9)z^%v&7aet%mkq%avp$nj055kuut_l4kb7gqba'
+)
+
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'myapp-2-z7fd.onrender.com').split(',')
+ALLOWED_HOSTS = ['*'] if DEBUG else os.getenv('ALLOWED_HOSTS', 'myapp-2-z7fd.onrender.com').split(',')
 
 # -----------------------
 # Installed apps
@@ -66,21 +70,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myapp.wsgi.application'
 
 # -----------------------
-# Database (MySQL on Render)
+# Database
 # -----------------------
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'django_db'),
-        'USER': os.getenv('DB_USER', 'root'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'aws.connect.psdb.cloud'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-        'OPTIONS': {
-            'ssl': {'ca': os.getenv('MYSQL_SSL_CA', None)},  # Render may provide a CA certificate
-        },
+if DEBUG:
+    # Development: Local MySQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'django_db',
+            'USER': 'root',
+            'PASSWORD': '',  # Your local password
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    # Production: External PostgreSQL on Render
+    DATABASES = {
+        'default': dj_database_url.parse(
+            os.getenv(
+                'DATABASE_URL',
+                'postgresql://django_db_ggnj_user:HhIElWSzcTv6fHjlwQZjTd5BjyRG2FC0@dpg-d2ep8andiees73847q10-a.oregon-postgres.render.com/django_db_ggnj'
+            ),
+            conn_max_age=600,
+            ssl_require=True  # Required for Render PostgreSQL
+        )
+    }
 
 # -----------------------
 # Password validation
@@ -105,7 +120,7 @@ USE_TZ = True
 # -----------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # local static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'    # collected static files for production
+STATIC_ROOT = BASE_DIR / 'staticfiles'    # production collectstatic
 
 # -----------------------
 # Default primary key field type
@@ -116,4 +131,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
-
