@@ -5,11 +5,13 @@ mysqlclient==2.2.4
 sqlparse==0.5.1
 google-generativeai
 pyautogui
-gunicorn
+
+gunicorn==22.3.1
 
 Django==4.2.14
 mysqlclient==2.2.4
 pymysql==1.1.1
 django-bootstrap-v5==1.0.11
 # your other dependencies...
+
 
