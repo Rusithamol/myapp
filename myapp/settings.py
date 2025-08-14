@@ -79,7 +79,7 @@ if DEBUG:  # Local development with XAMPP
 else:  # Production on Render
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': os.getenv('django_db'),
             'USER': os.getenv('root'),
            
@@ -129,5 +129,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
+
 
 
