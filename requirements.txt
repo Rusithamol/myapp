@@ -7,6 +7,8 @@ mysqlclient==2.2.7               # if you also use MySQL locally
 PyMySQL==1.1.1
 django-bootstrap-v5==1.0.11
 python-decouple==3.8
+whitenoise==6.5.0
+
 
 # Optional / utility dependencies
 asgiref==3.8.1
@@ -26,4 +28,5 @@ typing_extensions==4.12.2
 tzdata==2025.1
 urllib3==2.5.0
 virtualenv==20.29.3
+
 
