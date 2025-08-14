@@ -4,6 +4,10 @@ Django settings for myapp project.
 
 import os
 from pathlib import Path
+import pymysql
+
+# Install PyMySQL as MySQLdb
+pymysql.install_as_MySQLdb()
 
 # -----------------------
 # Paths
@@ -17,12 +21,10 @@ SECRET_KEY = os.getenv(
     'SECRET_KEY',
     'django-insecure-vu@0qc(d-7a9)z^%v&7aet%mkq%avp$nj055kuut_l4kb7gqba'
 )
+
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-if DEBUG:
-    ALLOWED_HOSTS = ['*']
-else:
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'myapp-1-wl38.onrender.com').split(',')
+ALLOWED_HOSTS = ['*'] if DEBUG else os.getenv('ALLOWED_HOSTS', 'myapp-1-wl38.onrender.com').split(',')
 
 # -----------------------
 # Installed apps
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'myapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,14 +84,11 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'django_db',  # Local DB name
-            'USER': 'root',       # Local DB user
-            'PASSWORD': '',       # Local DB password
+            'NAME': 'django_db',  # Local DB
+            'USER': 'root',
+            'PASSWORD': '',       # Local password
             'HOST': '127.0.0.1',
             'PORT': '3306',
-            'OPTIONS': {
-            'ssl': {'ca': '/path/to/ssl/cert.pem'}  # If your DB requires SSL
-        },
         }
     }
 else:
@@ -102,8 +101,9 @@ else:
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT', '3306'),
             'OPTIONS': {
-            'ssl': {'ca': '/path/to/ssl/cert.pem'}  # If your DB requires SSL
-        },
+                # Uncomment and set path if your DB requires SSL
+                # 'ssl': {'ca': os.path.join(BASE_DIR, 'ssl', 'cert.pem')}
+            },
         }
     }
 
@@ -111,18 +111,10 @@ else:
 # Password validation
 # -----------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # -----------------------
@@ -149,5 +141,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 # -----------------------
 AUTH_USER_MODEL = 'authentication.User'
-
 
