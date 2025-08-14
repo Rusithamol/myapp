@@ -1,3 +1,9 @@
+dj-database-url==1.1.0
+gunicorn==22.3.1
+mysqlclient==2.2.7
+Django==4.2.20
+PyMySQL==1.1.1
+
 asgiref==3.8.1
 beautifulsoup4==4.13.3
 certifi==2025.7.14
@@ -21,3 +27,4 @@ tzdata==2025.1
 urllib3==2.5.0
 virtualenv==20.29.3
 dj-database-url==1.1.0
+
